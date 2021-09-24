@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"goWeb/data"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -13,7 +14,11 @@ func PostUsers(c *gin.Context) {
 	defer c.Abort()
 	fmt.Println("PostUsers  ------")
 
-	c.JSON(http.StatusNoContent, gin.H{"sessionId": "1001"})
+
+	data, _ := ioutil.ReadAll(c.Request.Body)
+	fmt.Printf("ctx.Request.body: %v", string(data))
+
+	c.String(http.StatusNoContent, "")
 }
 
 func UploadStart(c *gin.Context) {
@@ -157,7 +162,6 @@ func GetReplay(c *gin.Context) {
 
 	var filter data.SelectFilter
 	if c.ShouldBindQuery(&filter) == nil {
-
 		var list = data.SelectReplay(&filter)
 		c.JSON(http.StatusNoContent, list)
 	}

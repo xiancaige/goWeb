@@ -5,10 +5,9 @@ import (
 	"goWeb/handle"
 )
 
-var router *gin.Engine
 
 func main() {
-	router = gin.Default()
+	router := gin.Default()
 	//---上传---
 	router.POST("/replay/:SessionName", handle.UploadStart)
 	router.POST("/replay/:SessionName/users", handle.PostUsers)
